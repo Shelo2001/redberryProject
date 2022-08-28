@@ -1,8 +1,12 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import footer from '../images/footer.png'
 
 const LaptopInfoPage = () => {
+  const [cpuInfo, setCpuInfo] = useState([])
+  const [brandInfo, setBrandInfo] = useState([])
+
   const [laptopName, setLaptopName] = useState('')
   const [laptopBrand, setLaptopBrand] = useState('')
   const [laptopCpu, setLaptopCpu] = useState('')
@@ -13,6 +17,9 @@ const LaptopInfoPage = () => {
   const [laptopDate, setLaptopDate] = useState('')
   const [laptopPrice, setLaptopPrice] = useState(0)
   const [laptopCondition, setLaptopCondition] = useState('')
+  const [file, setFile] = useState(null)
+  const inputRef = useRef()
+  const token = '93809131a5c595ceaf54d7ab8db53252'
 
   const laptopDetails = {
     laptopName,
@@ -25,36 +32,87 @@ const LaptopInfoPage = () => {
     laptopDate,
     laptopPrice,
     laptopCondition,
+    file,
   }
+
+  useEffect(() => {
+    const laptopInfo = JSON.parse(localStorage.getItem('laptopInfo'))
+    if (laptopInfo) {
+      setLaptopName(laptopInfo.laptopName)
+      setLaptopBrand(laptopInfo.laptopBrand)
+      setLaptopCpu(laptopInfo.laptopCpu)
+      setLaptopCpuCore(laptopInfo.laptopCpuCore)
+      setLaptopRam(laptopInfo.laptopRam)
+      setLaptopCpuStream(laptopInfo.laptopCpuStream)
+      setLaptopMemoryType(laptopInfo.laptopMemoryType)
+      setLaptopDate(laptopInfo.laptopDate)
+      setLaptopPrice(laptopInfo.laptopPrice)
+      setLaptopCondition(laptopInfo.laptopCondition)
+    }
+  }, [])
+
+  useEffect(() => {
+    const getCpu = async () => {
+      const { data } = await axios.get(
+        'https://pcfy.redberryinternship.ge/api/cpus'
+      )
+      setCpuInfo(data.data)
+    }
+    const getBrands = async () => {
+      const { data } = await axios.get(
+        'https://pcfy.redberryinternship.ge/api/brands'
+      )
+      setBrandInfo(data.data)
+    }
+
+    getBrands()
+    getCpu()
+  }, [])
 
   const submitHandler = () => {
     const personInfo = JSON.parse(localStorage.getItem('personInfo'))
     localStorage.setItem('laptopInfo', JSON.stringify(laptopDetails))
-    const laptopInfo = JSON.parse(localStorage.getItem('laptopInfo'))
     const { name, surname, email, team, position, phoneNumber } = personInfo
-    const info = {
-      name,
-      surname,
-      email,
-      team,
-      position,
-      phoneNumber,
-      laptopName,
-      laptopBrand,
-      laptopCpu,
-      laptopCpuCore,
-      laptopCpuStream,
-      laptopRam,
-      laptopMemoryType,
-      laptopDate,
-      laptopPrice,
-      laptopCondition,
-    }
+
+    axios({
+      method: 'post',
+      url: 'https://pcfy.redberryinternship.ge/api/laptop/create',
+      data: {
+        name,
+        surname,
+        email,
+        team_id: team,
+        position_id: position,
+        phone_number: phoneNumber,
+        laptop_name: laptopName,
+        laptop_brand_id: laptopBrand,
+        laptop_cpu: laptopCpu,
+        laptop_cpu_cores: laptopCpuCore,
+        laptop_cpu_threads: laptopCpuStream,
+        laptop_ram: laptopRam,
+        laptop_hard_drive_type: laptopMemoryType,
+        laptop_price: laptopPrice,
+        laptop_state: laptopCondition,
+        laptop_image: file,
+        laptop_purchase_date: laptopDate,
+        token,
+      },
+      headers: { 'Content-Type': 'multipart/form-data' },
+    })
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (response) {
+        console.log(response)
+      })
   }
+
+  console.log(file)
+
   return (
     <div>
       <div className='infoBody1'>
-        <Link to='/workerinfo'>
+        <Link to='/'>
           <button className='backButton left'>
             <i class='fa-solid fa-chevron-left'></i>
           </button>
@@ -68,7 +126,16 @@ const LaptopInfoPage = () => {
             <div className='file'>
               <p className='laptopFile'>ჩააგდე ან ატვირთე</p>
               <p className='laptopFile'> ლეპტოპის ფოტო</p>
-              <button className='button2'>ატვირთე</button>
+              <label for='file-upload' class='fileAppearance'>
+                ატვირთე
+              </label>
+              <input
+                id='file-upload'
+                accept='image/*'
+                type='file'
+                onChange={() => setFile(inputRef.current.files[0])}
+                ref={inputRef}
+              />
             </div>
           </div>
           <div className='infoPerson'>
@@ -78,6 +145,7 @@ const LaptopInfoPage = () => {
                 type='text'
                 className='input'
                 placeholder='HP'
+                value={laptopName}
                 onChange={(e) => setLaptopName(e.target.value)}
               />
               <p className='label3'>
@@ -92,8 +160,11 @@ const LaptopInfoPage = () => {
                 <option disabled selected>
                   ლეპტოპის ბრენდი
                 </option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
+                {brandInfo.map((brandItem) => (
+                  <option value={brandItem.id} key={brandItem.id}>
+                    {brandItem.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -108,8 +179,11 @@ const LaptopInfoPage = () => {
                 <option disabled selected>
                   CPU
                 </option>
-                <option value='2'>2</option>
-                <option value='3'>3</option>
+                {cpuInfo.map((item) => (
+                  <option value={item.name} key={item.id}>
+                    {item.name}
+                  </option>
+                ))}
               </select>
             </div>
             <div>
@@ -117,6 +191,7 @@ const LaptopInfoPage = () => {
               <input
                 type='text'
                 className='laptopInfoInput'
+                value={Number(laptopCpuCore)}
                 placeholder='0'
                 onChange={(e) => setLaptopCpuCore(e.target.value)}
               />
@@ -127,6 +202,7 @@ const LaptopInfoPage = () => {
               <input
                 type='text'
                 className='laptopInfoInput'
+                value={Number(laptopCpuStream)}
                 placeholder='0'
                 onChange={(e) => setLaptopCpuStream(e.target.value)}
               />
@@ -139,6 +215,7 @@ const LaptopInfoPage = () => {
               <p className='label'>ლეპტოპის RAM (GB)</p>
               <input
                 type='text'
+                value={Number(laptopRam)}
                 className='laptopInfoInput2'
                 placeholder='0'
                 onChange={(e) => setLaptopRam(e.target.value)}
@@ -148,14 +225,14 @@ const LaptopInfoPage = () => {
 
             <div onChange={(e) => setLaptopMemoryType(e.target.value)}>
               <p className='label'>მეხსიერების ტიპი</p>
-              <input type='radio' name='memoryType' value='ssd'></input>
+              <input type='radio' name='memoryType' value='SSD'></input>
               <label className='radioLabel'>SSD</label>
 
               <input
                 type='radio'
                 className='radioButton'
                 name='memoryType'
-                value='hdd'
+                value='HDD'
               ></input>
               <label className='radioLabel'>HDD</label>
             </div>
@@ -168,6 +245,7 @@ const LaptopInfoPage = () => {
               <p className='label'>შეძენის რიცხვი (არჩევითი)</p>
               <input
                 type='date'
+                value={laptopDate}
                 placeholder='დდ/თთ/წწწწ'
                 onChange={(e) => setLaptopDate(e.target.value)}
               />
@@ -178,6 +256,7 @@ const LaptopInfoPage = () => {
                 type='text'
                 className='laptopInfoInput2'
                 placeholder='0'
+                value={Number(laptopPrice)}
                 onChange={(e) => setLaptopPrice(e.target.value)}
               />
               <p className='label3'>მხოლოდ ციფრები</p>
@@ -185,13 +264,14 @@ const LaptopInfoPage = () => {
 
             <div
               style={{ marginRight: '465px' }}
+              value={laptopCondition}
               onChange={(e) => setLaptopCondition(e.target.value)}
             >
               <p className='label'>ლეპტოპის მდგომარეობა</p>
               <input
                 type='radio'
                 name='laptopCondition'
-                value='meoradi'
+                value='secondhand'
               ></input>
               <label className='radioLabel'>მეორადი</label>
 
@@ -199,7 +279,7 @@ const LaptopInfoPage = () => {
                 type='radio'
                 className='radioButton'
                 name='laptopCondition'
-                value='axali'
+                value='new'
               ></input>
               <label className='radioLabel'>ახალი</label>
             </div>
@@ -226,7 +306,7 @@ const LaptopInfoPage = () => {
               style={{ marginBottom: '40px' }}
               onClick={submitHandler}
             >
-              შემდეგი
+              დამახსოვრება
             </button>
           </Link>
         </div>

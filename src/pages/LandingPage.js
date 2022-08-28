@@ -20,7 +20,9 @@ const LandingPage = () => {
         </button>
       </div>
       <div>
-        <button className='button'>ჩანაწერების სია</button>
+        <button className='button'>
+          <Link to='/laptoplist'>ჩანაწერების სია</Link>
+        </button>
       </div>
     </div>
   )

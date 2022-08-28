@@ -173,7 +173,7 @@ a {
   font-family: 'Arial';
   display: inline-block;
   cursor: pointer;
-  padding: 15px 395px;
+  padding: 15px 385px;
   outline: 0;
   border: 0px solid #000000;
   border-radius: 9px;
@@ -359,8 +359,64 @@ input[type='date'] {
   width: 400px;
 }
 
+input[type='file'] {
+  display: none;
+}
+.fileAppearance {
+  background-color: #79bbff;
+  border-radius: 6px;
+  border: 1px solid #84bbf3;
+  display: inline-block;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px 56px;
+  text-decoration: none;
+  margin-top: 105px;
+}
+
+.navTitle1 {
+  font-size: 40px;
+  font-weight: bolder;
+}
+
 .radioButton {
   margin-left: 35px;
+}
+
+.cardContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  width: 60%;
+  overflow: auto;
+  flex-direction: row;
+}
+
+.card {
+  border: 1px solid #aed1ea;
+  width: 440px;
+  height: 160px;
+  margin: 20px;
+  background-color: #eafaff;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  flex-direction: row;
+}
+
+.cardInfo {
+  width: 200px;
+  height: 140px;
+  margin: 8px;
+  border-radius: 5px;
 }
 
 .footer {
