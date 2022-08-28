@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import footer from '../images/footer.png'
 import axios from 'axios'
 
 const WorkerInfoPage = () => {
+  const navigate = useNavigate()
   const [teamsInfo, setTeamsInfo] = useState([])
   const [positionInfo, setPositionInfo] = useState([])
 
@@ -13,10 +14,26 @@ const WorkerInfoPage = () => {
   const [team, setTeam] = useState(0)
   const [position, setPosition] = useState(0)
   const [phoneNumber, setPhoneNumber] = useState('')
+  const [emailError, setEmailError] = useState('')
+  const [nameError, setNameError] = useState('')
+  const [surnameError, setSurnameError] = useState('')
+
+  const res = /^[ა-ჰ]+$/
 
   const personInfo = { name, surname, email, team, position, phoneNumber }
   const submitHandler = () => {
     localStorage.setItem('personInfo', JSON.stringify(personInfo))
+    if (email.split('@')[1] != 'redberry.ge') {
+      setEmailError('უნდა მთავრდებოდეს @redburry.ge')
+    }
+    if (!res.test(`${name}`)) {
+      setNameError('error')
+    }
+    if (!res.test(`${surname}`)) {
+      console.log('error')
+    } else {
+      navigate('/laptopinfo')
+    }
   }
 
   useEffect(() => {
@@ -64,10 +81,14 @@ const WorkerInfoPage = () => {
         <div className='infobody'>
           <div className='infoPerson'>
             <div>
-              <p className='label'>სახელი</p>
+              {nameError ? (
+                <p style={{ color: 'red', fontWeight: 'bold' }}>სახელი</p>
+              ) : (
+                <p className='label'>სახელი</p>
+              )}
               <input
                 type='text'
-                className='input'
+                className={nameError ? 'inputError' : 'input'}
                 placeholder='გრიშა'
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -114,16 +135,26 @@ const WorkerInfoPage = () => {
             </select>
           </div>
           <div>
-            <p className='label1'>ემაილი</p>
+            {emailError ? (
+              <p className='label1' style={{ color: 'red' }}>
+                ემაილი
+              </p>
+            ) : (
+              <p className='label1'>ემაილი</p>
+            )}
 
             <input
               type='text'
-              className='input1'
+              className={emailError ? 'errorInput' : 'input1'}
               value={email}
               placeholder='grisha@redburry.com'
               onChange={(e) => setEmail(e.target.value)}
             />
-            <p className='label2'>უნდა მთავრდებოდეს @redburry.com</p>
+            {emailError ? (
+              <p className='errorLabel'>{emailError}</p>
+            ) : (
+              <p className='label2'>უნდა მთავრდებოდეს @redburry.ge</p>
+            )}
           </div>
           <div>
             <p className='label1'>ტელეფონის ნომერი</p>
@@ -136,13 +167,14 @@ const WorkerInfoPage = () => {
             />
             <p className='label2'>უნდა აკმაყოფილებდეს ქართული ნომრის ფორმატს</p>
           </div>
-          <Link to='/laptopinfo'>
-            <button onClick={submitHandler} className='button1'>
-              შემდეგი
-            </button>
-          </Link>
+
+          <button onClick={submitHandler} className='button1'>
+            შემდეგი
+          </button>
         </div>
-        <img className='footer' src={footer}></img>
+        <div>
+          <img className='footer' src={footer} style={{ bottom: '0' }} />
+        </div>
       </div>
     </div>
   )

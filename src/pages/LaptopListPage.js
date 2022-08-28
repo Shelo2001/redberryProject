@@ -41,7 +41,10 @@ const LaptopListPage = () => {
             laptop.map((l) => (
               <div className='card'>
                 <div className='cardInfo'>
-                  <img src={l.laptop.image}></img>
+                  <img
+                    style={{ minHeight: '140px', minWidth: '100%' }}
+                    src={l.laptop.image}
+                  ></img>
                 </div>
                 <div className='cardInfo'>
                   <p

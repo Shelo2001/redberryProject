@@ -115,10 +115,12 @@ a {
 .label {
   font-weight: bold;
 }
+
 .label1 {
   font-weight: bold;
   margin-left: 70px;
   margin-top: 20px;
+  font-size: large;
 }
 
 .label2 {
@@ -128,13 +130,26 @@ a {
   margin-bottom: 20px;
 }
 
+.errorLabel {
+  font-weight: lighter;
+  margin-left: 70px;
+  color: red;
+  margin-bottom: 20px;
+}
+
 .label3 {
   font-weight: lighter;
   color: #9f9999;
   margin-bottom: 20px;
 }
+.label4 {
+  font-weight: lighter;
+  font-size: larger;
+  color: #9f9999;
+}
 
-.input {
+.input,
+.inputError {
   border-width: 2px;
   border-color: #84bbf3;
   border-style: solid;
@@ -145,6 +160,10 @@ a {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+.inputError {
+  border-color: red;
+}
+
 .input:focus {
   outline: none;
   border-width: 2px;
@@ -162,6 +181,18 @@ a {
   width: 830px;
   margin-left: 70px;
 }
+
+.errorInput {
+  border-width: 2px;
+  border-color: red;
+  border-style: solid;
+  padding: 7px;
+  font-size: 18px;
+  border-radius: 7px;
+  width: 830px;
+  margin-left: 70px;
+}
+
 .input1:focus {
   outline: none;
   border-width: 2px;
@@ -417,6 +448,42 @@ input[type='file'] {
   height: 140px;
   margin: 8px;
   border-radius: 5px;
+}
+
+.wrapper {
+  width: 960px;
+  margin: 100px auto;
+}
+
+.column {
+  float: left;
+  width: 50%;
+  min-height: 400px;
+}
+
+.product-wrap {
+  margin: 0 auto;
+  width: 350px;
+}
+
+.information {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: fit-content;
+}
+
+.column1 {
+  width: 200px;
+  height: 200px;
+  margin: 10px;
+}
+
+.column2 {
+  height: 200px;
+  margin: 10px;
 }
 
 .footer {

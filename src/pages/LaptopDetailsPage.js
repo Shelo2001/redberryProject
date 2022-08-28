@@ -26,14 +26,102 @@ const LaptopDetailsPage = () => {
 
   return (
     <div>
-      {loading ? (
-        <p>loading</p>
-      ) : (
-        <div className='card'>
-          <p>{laptop.name}</p>
-          <p>{user.name}</p>
+      <Link to='/'>
+        <button className='backButton left'>
+          <i class='fa-solid fa-chevron-left'></i>
+        </button>
+      </Link>
+      <div class='wrapper'>
+        <div class='column'>
+          <div class='product-wrap'>
+            <div>
+              <img style={{ minHeight: '260px' }} src={laptop.image} alt='' />
+            </div>
+          </div>
         </div>
-      )}
+
+        <div className='information'>
+          <div className='column1 label1'>
+            <p>სახელი:</p>
+            <p>თიმი:</p>
+            <p>პოზიცია:</p>
+            <p>მეილი:</p>
+            <p>ტელ. ნომერი:</p>
+          </div>
+          <div className='column1 label4'>
+            <p>{user.name}</p>
+            <p>{user.team_id}</p>
+            <p>{user.position_id}</p>
+            <p>{user.email}</p>
+            <p>{user.phone_number}</p>
+          </div>
+        </div>
+      </div>
+      <hr className='line' style={{ width: '50%' }} />
+
+      <div class='wrapper'>
+        <div class='column'>
+          <div className='information'>
+            <div className='column1 label1'>
+              <p>ლეპტოპის სახელი:</p>
+              <p>ბრენდი:</p>
+              <p>RAM:</p>
+              <p>მეხსიერების ტიპი:</p>
+            </div>
+            <div className='column1 label4'>
+              {console.log(laptop)}
+              <p>{laptop.name}</p>
+              <p>{laptop.brand_id}</p>
+              <p>{laptop.ram}</p>
+              <p>{laptop.hard_drive_type}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class='column'>
+          <div className='information'>
+            <div className='column1 label1'>
+              <p>CPU:</p>
+              <p>CPU_ს ბირთვი:</p>
+              <p>CPU_ს ნაკადი:</p>
+            </div>
+            <div className='column1 label4'>
+              <p>{laptop.cpu_id}</p>
+              <p>{laptop.ram}</p>
+              <p>{laptop.hard_drive_type}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr className='line' style={{ width: '50%' }} />
+
+      <div class='wrapper'>
+        <div class='column'>
+          <div className='information'>
+            <div className='column1 label1'>
+              <p>ლეპტოპის მდგომარეობა:</p>
+              <p>ლეპტოპის ფასი:</p>
+            </div>
+            <div className='column1 label4'>
+              {console.log(laptop)}
+              <p>{laptop.state}</p>
+              <p style={{ marginTop: '40px' }}>{laptop.price}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class='column'>
+          <div className='information'>
+            <div className='column1 label1'>
+              <p>შევსების რიცხვი:</p>
+            </div>
+            <div className='column1 label4'>
+              <p>{laptop.purchase_date}</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

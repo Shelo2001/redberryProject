@@ -2,7 +2,24 @@ import axios from 'axios'
 import React, { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import footer from '../images/footer.png'
+import frame from '../images/Frame.png'
+import Modal from 'react-modal'
 
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '50%',
+    minHeight: '400px',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+  },
+}
 const LaptopInfoPage = () => {
   const [cpuInfo, setCpuInfo] = useState([])
   const [brandInfo, setBrandInfo] = useState([])
@@ -20,6 +37,9 @@ const LaptopInfoPage = () => {
   const [file, setFile] = useState(null)
   const inputRef = useRef()
   const token = '93809131a5c595ceaf54d7ab8db53252'
+
+  let subtitle
+  const [modalIsOpen, setIsOpen] = useState(false)
 
   const laptopDetails = {
     laptopName,
@@ -100,7 +120,7 @@ const LaptopInfoPage = () => {
       headers: { 'Content-Type': 'multipart/form-data' },
     })
       .then(function (response) {
-        console.log(response)
+        setIsOpen(true)
       })
       .catch(function (response) {
         console.log(response)
@@ -259,6 +279,10 @@ const LaptopInfoPage = () => {
                 value={Number(laptopPrice)}
                 onChange={(e) => setLaptopPrice(e.target.value)}
               />
+              <i
+                class='fa-solid fa-lari-sign'
+                style={{ marginLeft: '5px' }}
+              ></i>
               <p className='label3'>მხოლოდ ციფრები</p>
             </div>
 
@@ -300,17 +324,44 @@ const LaptopInfoPage = () => {
             </button>
           </Link>
 
-          <Link to='/laptopinfo'>
-            <button
-              className='button1'
-              style={{ marginBottom: '40px' }}
-              onClick={submitHandler}
+          <button
+            className='button1'
+            style={{ marginBottom: '40px' }}
+            onClick={submitHandler}
+          >
+            დამახსოვრება
+          </button>
+
+          <div>
+            <Modal
+              isOpen={modalIsOpen}
+              style={customStyles}
+              contentLabel='Example Modal'
             >
-              დამახსოვრება
-            </button>
-          </Link>
+              <img src={frame} />
+              <p className='navTitle1'>ჩანაწერი დამატებულია !</p>
+              <Link to='/laptoplist'>
+                <button className='button'>სიაში გადაყვანა</button>
+              </Link>
+              <Link to='/'>
+                <button
+                  style={{
+                    backgroundColor: 'white',
+                    color: '#84bbf3',
+                    border: '1px solid white',
+                    marginTop: '40px',
+                  }}
+                  className='button'
+                >
+                  მთავარი
+                </button>
+              </Link>
+            </Modal>
+          </div>
         </div>
-        <img className='footer' src={footer}></img>
+        <div>
+          <img className='footer' src={footer} style={{ bottom: '0' }} />
+        </div>
       </div>
     </div>
   )

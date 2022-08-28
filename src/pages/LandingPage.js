@@ -15,14 +15,15 @@ const LandingPage = () => {
       </div>
 
       <div>
-        <button className='button'>
-          <Link to='/workerinfo'>ჩანაწერის დამატება</Link>
-        </button>
+        <Link to='/workerinfo'>
+          <button className='button'>ჩანაწერის დამატება</button>
+        </Link>
       </div>
       <div>
-        <button className='button'>
-          <Link to='/laptoplist'>ჩანაწერების სია</Link>
-        </button>
+        <Link to='/laptoplist'>
+          {' '}
+          <button className='button'>ჩანაწერების სია</button>
+        </Link>
       </div>
     </div>
   )
