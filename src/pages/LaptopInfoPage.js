@@ -162,6 +162,8 @@ const LaptopInfoPage = () => {
     }
   }
 
+  console.log(file)
+
   return (
     <div>
       <div className='infoBody1'>
@@ -183,13 +185,28 @@ const LaptopInfoPage = () => {
                   style={{ color: '#c8cb52', marginTop: '20px' }}
                 ></i>
               )}
-              <p className={fileError ? 'laptopFileError' : 'laptopFile'}>
-                ჩააგდე ან ატვირთე
-              </p>
-              <p className={fileError ? 'laptopFileError' : 'laptopFile'}>
-                {' '}
-                ლეპტოპის ფოტო
-              </p>
+              {file ? (
+                <img
+                  style={{
+                    minWidth: '260px',
+                    maxWidth: '260px',
+                    maxHeight: '260px',
+                    border: '1px solid white',
+                    borderRadius: '10px',
+                  }}
+                  src={URL.createObjectURL(file)}
+                />
+              ) : (
+                <div>
+                  <p className={fileError ? 'laptopFileError' : 'laptopFile'}>
+                    ჩააგდე ან ატვირთე
+                  </p>
+                  <p className={fileError ? 'laptopFileError' : 'laptopFile'}>
+                    {' '}
+                    ლეპტოპის ფოტო
+                  </p>
+                </div>
+              )}
               <label for='file-upload' class='fileAppearance'>
                 ატვირთე
               </label>
