@@ -36,7 +36,7 @@ const LaptopInfoPage = () => {
   const [laptopPrice, setLaptopPrice] = useState(0)
   const [laptopCondition, setLaptopCondition] = useState('')
   const inputRef = useRef()
-  const token = '9416272e2b43dd04ac6786836a8a340e'
+  const token = 'c1b181e54c4737b68b02c3f53fbbdc7e'
   const [modalIsOpen, setIsOpen] = useState(false)
 
   const [fileError, setFileError] = useState(null)
@@ -188,9 +188,9 @@ const LaptopInfoPage = () => {
               {file ? (
                 <img
                   style={{
-                    minWidth: '260px',
-                    maxWidth: '260px',
-                    maxHeight: '260px',
+                    minWidth: '100px',
+                    maxWidth: '100px',
+                    maxHeight: '100px',
                     border: '1px solid white',
                     borderRadius: '10px',
                   }}

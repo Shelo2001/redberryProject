@@ -5,23 +5,46 @@ import { Link } from 'react-router-dom'
 import footer from '../images/footer.png'
 
 const LaptopDetailsPage = () => {
+  const [team, setTeam] = useState([])
+  const [position, setPosition] = useState([])
+
   const [user, setUser] = useState({})
   const [laptop, setLaptop] = useState({})
+  const [laptopCpu, setLaptopCpu] = useState({})
   const [loading, setLoading] = useState(true)
   const params = useParams()
 
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=9416272e2b43dd04ac6786836a8a340e`
+        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=c1b181e54c4737b68b02c3f53fbbdc7e`
       )
 
       setUser(data.data.data.user)
       setLaptop(data.data.data.laptop)
+      setLaptopCpu(data.data.data.laptop.cpu)
       setLoading(false)
     }
 
     getLaptops()
+  }, [])
+
+  useEffect(() => {
+    const getTeams = async () => {
+      const { data } = await axios.get(
+        'https://pcfy.redberryinternship.ge/api/teams'
+      )
+      setTeam(data.data)
+    }
+    const getPositions = async () => {
+      const { data } = await axios.get(
+        'https://pcfy.redberryinternship.ge/api/positions'
+      )
+      setPosition(data.data)
+    }
+
+    getTeams()
+    getPositions()
   }, [])
 
   return (
@@ -66,8 +89,16 @@ const LaptopDetailsPage = () => {
             <p>
               {user.name} {user.surname}
             </p>
-            <p>{user.team_id}</p>
-            <p>{user.position_id}</p>
+            {team.map((t) => {
+              if (t.id == user.team_id) {
+                return <p>{t.name}</p>
+              }
+            })}
+            {position.map((p) => {
+              if (p.id == user.position_id) {
+                return <p>{p.name}</p>
+              }
+            })}
             <p>{user.email}</p>
             <p>{user.phone_number}</p>
           </div>
@@ -85,7 +116,6 @@ const LaptopDetailsPage = () => {
               <p>მეხსიერების ტიპი:</p>
             </div>
             <div className='column1 label4'>
-              {console.log(laptop)}
               <p>{laptop.name}</p>
               <p>{laptop.brand_id}</p>
               <p>{laptop.ram}</p>
@@ -102,9 +132,9 @@ const LaptopDetailsPage = () => {
               <p>CPU_ს ნაკადი:</p>
             </div>
             <div className='column1 label4'>
-              <p>{laptop.cpu_id}</p>
-              <p>{laptop.ram}</p>
-              <p>{laptop.hard_drive_type}</p>
+              <p>{laptopCpu.name}</p>
+              <p>{laptopCpu.cores}</p>
+              <p>{laptopCpu.threads}</p>
             </div>
           </div>
         </div>
@@ -121,7 +151,7 @@ const LaptopDetailsPage = () => {
             </div>
             <div className='column1 label4'>
               {laptop.state == 'used' ? <p>მეორადი</p> : <p>ახალი</p>}
-              <p style={{ marginTop: '40px' }}>{laptop.price}</p>
+              <p style={{ marginTop: '40px' }}>{laptop.price} ₾</p>
             </div>
           </div>
         </div>

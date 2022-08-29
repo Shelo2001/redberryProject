@@ -10,7 +10,7 @@ const LaptopListPage = () => {
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        'https://pcfy.redberryinternship.ge/api/laptops?token=9416272e2b43dd04ac6786836a8a340e'
+        'https://pcfy.redberryinternship.ge/api/laptops?token=c1b181e54c4737b68b02c3f53fbbdc7e'
       )
 
       console.log()

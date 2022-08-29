@@ -1,3 +1,12 @@
+@font-face {
+  font-family: ttc;
+  src: url('C:\Users\shelia\Downloads\HelveticaNeue (1).ttc');
+}
+
+.body {
+  font-family: ttc;
+}
+
 .container {
   display: flex;
   flex-wrap: nowrap;
@@ -50,6 +59,22 @@ a {
 
 .button2 {
   margin-top: 140px;
+}
+
+.button:hover {
+  background-color: #1a5dab;
+  border: 1px solid #1a5dab;
+  transition: ease 0.3s;
+}
+.button1:hover {
+  background-color: #1a5dab;
+  border: 1px solid #1a5dab;
+  transition: ease 0.3s;
+}
+.button2:hover {
+  background-color: #1a5dab;
+  border: 1px solid #1a5dab;
+  transition: ease 0.3s;
 }
 
 .infoBody {
@@ -110,6 +135,11 @@ a {
   padding: 16px 20px;
   border: #f1f1f1;
   cursor: pointer;
+}
+.backButton:hover {
+  background-color: #f2f2f2;
+  transition: ease-in 0.3s;
+  border: #f1f1f1;
 }
 
 .label {
@@ -273,6 +303,7 @@ option {
   overflow: auto;
   flex-direction: column;
 }
+
 .fileError {
   border: dashed 2px #f39c9c;
   background-color: #fff1f1;
