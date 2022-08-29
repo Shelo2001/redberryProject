@@ -17,20 +17,33 @@ const WorkerInfoPage = () => {
   const [emailError, setEmailError] = useState('')
   const [nameError, setNameError] = useState('')
   const [surnameError, setSurnameError] = useState('')
+  const [teamError, setTeamError] = useState('')
+  const [positionError, setPositionError] = useState('')
+  const [phoneNumberError, setPhoneNumberError] = useState('')
 
   const res = /^[ა-ჰ]+$/
 
   const personInfo = { name, surname, email, team, position, phoneNumber }
   const submitHandler = () => {
     localStorage.setItem('personInfo', JSON.stringify(personInfo))
-    if (email.split('@')[1] != 'redberry.ge') {
-      setEmailError('უნდა მთავრდებოდეს @redburry.ge')
-    }
     if (!res.test(`${name}`)) {
-      setNameError('error')
-    }
-    if (!res.test(`${surname}`)) {
-      console.log('error')
+      setNameError('გთხოვთ შეიყვანეთ ქართული ასოებით')
+    } else if (name.length < 2) {
+      setNameError('მინიმუმ ორი ქართული ასო')
+    } else if (!res.test(`${surname}`)) {
+      setSurnameError('გთხოვთ შეიყვანეთ ქართული ასოებით')
+    } else if (surname.length < 2) {
+      setSurnameError('მინიმუმ ორი ქართული ასო')
+    } else if (!team) {
+      setTeamError('error')
+    } else if (!position) {
+      setPositionError('error')
+    } else if (email.split('@')[1] != 'redberry.ge') {
+      setEmailError('უნდა მთავრდებოდეს @redburry.ge')
+    } else if (!phoneNumber.startsWith('+995')) {
+      setPhoneNumberError('ნომერი უნდა იწყებოდეს +995 ით')
+    } else if (phoneNumber.length < 13) {
+      setPhoneNumberError('არ შეესაბამება ქართული ნომრის ფორმატს')
     } else {
       navigate('/laptopinfo')
     }
@@ -82,7 +95,7 @@ const WorkerInfoPage = () => {
           <div className='infoPerson'>
             <div>
               {nameError ? (
-                <p style={{ color: 'red', fontWeight: 'bold' }}>სახელი</p>
+                <p style={{ color: '#e52f2f', fontWeight: 'bold' }}>სახელი</p>
               ) : (
                 <p className='label'>სახელი</p>
               )}
@@ -93,26 +106,44 @@ const WorkerInfoPage = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
-              <p className='label3'>მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
+              {nameError ? (
+                <p className='label3' style={{ color: '#e52f2f' }}>
+                  {nameError}
+                </p>
+              ) : (
+                <p className='label3'>მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
+              )}
             </div>
             <div>
-              <p className='label'>გვარი</p>
+              {surnameError ? (
+                <p style={{ color: '#e52f2f', fontWeight: 'bold' }}>გვარი</p>
+              ) : (
+                <p className='label'>გვარი</p>
+              )}
 
               <input
                 type='text'
-                className='input'
+                className={surnameError ? 'inputError' : 'input'}
                 placeholder='ბაგრატიონი'
                 value={surname}
                 onChange={(e) => setSurname(e.target.value)}
               />
-              <p className='label3'>მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
+              {surnameError ? (
+                <p className='label3' style={{ color: '#e52f2f' }}>
+                  {surnameError}
+                </p>
+              ) : (
+                <p className='label3'>მინიმუმ 2 სიმბოლო ქართული ასოებით</p>
+              )}
             </div>
           </div>
           <div>
             <select
               onChange={(e) => setTeam(e.target.value)}
-              className='select'
+              className={teamError ? 'selectError' : 'select'}
             >
+              {' '}
+              <option disabled>თიმი</option>
               {teamsInfo.map((team) => (
                 <option value={team.id} key={team.id}>
                   {team.name}
@@ -122,9 +153,10 @@ const WorkerInfoPage = () => {
           </div>
           <div>
             <select
-              className='select'
+              className={positionError ? 'selectError' : 'select'}
               onChange={(e) => setPosition(e.target.value)}
             >
+              <option disabled>პოზიცია</option>
               {positionInfo
                 .filter((position) => position.team_id == team)
                 .map((p) => (
@@ -136,7 +168,7 @@ const WorkerInfoPage = () => {
           </div>
           <div>
             {emailError ? (
-              <p className='label1' style={{ color: 'red' }}>
+              <p className='label1' style={{ color: '#e52f2f' }}>
                 ემაილი
               </p>
             ) : (
@@ -153,19 +185,33 @@ const WorkerInfoPage = () => {
             {emailError ? (
               <p className='errorLabel'>{emailError}</p>
             ) : (
-              <p className='label2'>უნდა მთავრდებოდეს @redburry.ge</p>
+              <p className='label2'>უნდა მთავრდებოდეს @redberry.ge</p>
             )}
           </div>
           <div>
-            <p className='label1'>ტელეფონის ნომერი</p>
+            {phoneNumberError ? (
+              <p className='label1' style={{ color: '#e52f2f' }}>
+                ტელეფონის ნომერი
+              </p>
+            ) : (
+              <p className='label1'>ტელეფონის ნომერი</p>
+            )}
 
             <input
               type='text'
-              className='input1'
+              className={phoneNumberError ? 'errorInput' : 'input1'}
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
             />
-            <p className='label2'>უნდა აკმაყოფილებდეს ქართული ნომრის ფორმატს</p>
+            {phoneNumberError ? (
+              <p className='label2' style={{ color: '#e52f2f' }}>
+                {phoneNumberError}
+              </p>
+            ) : (
+              <p className='label2'>
+                უნდა აკმაყოფილებდეს ქართული ნომრის ფორმატს
+              </p>
+            )}
           </div>
 
           <button onClick={submitHandler} className='button1'>

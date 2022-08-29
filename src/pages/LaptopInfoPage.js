@@ -24,6 +24,7 @@ const LaptopInfoPage = () => {
   const [cpuInfo, setCpuInfo] = useState([])
   const [brandInfo, setBrandInfo] = useState([])
 
+  const [file, setFile] = useState(null)
   const [laptopName, setLaptopName] = useState('')
   const [laptopBrand, setLaptopBrand] = useState('')
   const [laptopCpu, setLaptopCpu] = useState('')
@@ -34,12 +35,23 @@ const LaptopInfoPage = () => {
   const [laptopDate, setLaptopDate] = useState('')
   const [laptopPrice, setLaptopPrice] = useState(0)
   const [laptopCondition, setLaptopCondition] = useState('')
-  const [file, setFile] = useState(null)
   const inputRef = useRef()
   const token = '93809131a5c595ceaf54d7ab8db53252'
-
-  let subtitle
   const [modalIsOpen, setIsOpen] = useState(false)
+
+  const [fileError, setFileError] = useState(null)
+  const [laptopNameError, setLaptopNameError] = useState('')
+  const [laptopBrandError, setLaptopBrandError] = useState('')
+  const [laptopCpuError, setLaptopCpuError] = useState('')
+  const [laptopCpuCoreError, setLaptopCpuCoreError] = useState(0)
+  const [laptopCpuStreamError, setLaptopCpuStreamError] = useState(0)
+  const [laptopRamError, setLaptopRamError] = useState(0)
+  const [laptopMemoryTypeError, setLaptopMemoryTypeError] = useState('')
+  const [laptopDateError, setLaptopDateError] = useState('')
+  const [laptopPriceError, setLaptopPriceError] = useState(0)
+  const [laptopConditionError, setLaptopConditionError] = useState('')
+
+  const nameRegex = /^[~`!@#$%^&*()_+=[\]\{}|;':",.\/<>?a-zA-Z0-9-" +"]+$/
 
   const laptopDetails = {
     laptopName,
@@ -94,6 +106,18 @@ const LaptopInfoPage = () => {
     localStorage.setItem('laptopInfo', JSON.stringify(laptopDetails))
     const { name, surname, email, team, position, phoneNumber } = personInfo
 
+    if (!file) {
+      setFileError('error')
+    } else if (!nameRegex.test(`${laptopName}`)) {
+      setLaptopNameError('რიცხვი, ლათინური ასოები და სპეციალური სიმბოლოები')
+    } else if (!laptopMemoryType) {
+      setLaptopMemoryTypeError('error')
+    } else if (!laptopBrand) {
+      setLaptopBrandError('error')
+    } else if (!laptopCpu) {
+      setLaptopCpuError('error')
+    }
+
     axios({
       method: 'post',
       url: 'https://pcfy.redberryinternship.ge/api/laptop/create',
@@ -127,8 +151,6 @@ const LaptopInfoPage = () => {
       })
   }
 
-  console.log(file)
-
   return (
     <div>
       <div className='infoBody1'>
@@ -143,9 +165,20 @@ const LaptopInfoPage = () => {
         </div>
         <div className='infobody1'>
           <div className='infoPerson'>
-            <div className='file'>
-              <p className='laptopFile'>ჩააგდე ან ატვირთე</p>
-              <p className='laptopFile'> ლეპტოპის ფოტო</p>
+            <div className={fileError ? 'fileError' : 'file'}>
+              {fileError && (
+                <i
+                  class='fa-solid fa-triangle-exclamation fa-2x'
+                  style={{ color: '#c8cb52', marginTop: '20px' }}
+                ></i>
+              )}
+              <p className={fileError ? 'laptopFileError' : 'laptopFile'}>
+                ჩააგდე ან ატვირთე
+              </p>
+              <p className={fileError ? 'laptopFileError' : 'laptopFile'}>
+                {' '}
+                ლეპტოპის ფოტო
+              </p>
               <label for='file-upload' class='fileAppearance'>
                 ატვირთე
               </label>
@@ -160,17 +193,30 @@ const LaptopInfoPage = () => {
           </div>
           <div className='infoPerson'>
             <div>
-              <p className='label'>ლეპტოპის სახელი</p>
+              {laptopNameError ? (
+                <p className='label' style={{ color: '#e52f2f' }}>
+                  ლეპტოპის სახელი
+                </p>
+              ) : (
+                <p className='label'>ლეპტოპის სახელი</p>
+              )}
+
               <input
                 type='text'
-                className='input'
+                className={laptopNameError ? 'inputError' : 'input'}
                 placeholder='HP'
                 value={laptopName}
                 onChange={(e) => setLaptopName(e.target.value)}
               />
-              <p className='label3'>
-                მხოლოდ ლათინურ სიმბოლოებს "!@#$%^&*()_+="
-              </p>
+              {laptopNameError ? (
+                <p className='label3' style={{ color: '#e52f2f' }}>
+                  {laptopNameError}
+                </p>
+              ) : (
+                <p className='label3'>
+                  მხოლოდ ლათინურ სიმბოლოებს "!@#$%^&*()_+="
+                </p>
+              )}
             </div>
             <div>
               <select
@@ -244,7 +290,16 @@ const LaptopInfoPage = () => {
             </div>
 
             <div onChange={(e) => setLaptopMemoryType(e.target.value)}>
-              <p className='label'>მეხსიერების ტიპი</p>
+              <p className='label'>
+                მეხსიერების ტიპი{'   '}
+                {laptopMemoryTypeError && (
+                  <i
+                    class='fa-solid fa-triangle-exclamation'
+                    style={{ color: '#c8cb52' }}
+                  ></i>
+                )}
+              </p>
+
               <input type='radio' name='memoryType' value='SSD'></input>
               <label className='radioLabel'>SSD</label>
 

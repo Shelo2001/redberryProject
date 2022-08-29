@@ -58,7 +58,7 @@ a {
   align-items: center;
   align-content: flex-start;
   width: 100%;
-  background-color: #d9d9d9;
+  background-color: #f6f6f6;
   height: 100vh;
   flex-direction: column;
 }
@@ -69,7 +69,7 @@ a {
   align-items: center;
   align-content: flex-start;
   width: 100%;
-  background-color: #d9d9d9;
+  background-color: #f6f6f6;
   height: fit-content;
   flex-direction: column;
 }
@@ -104,7 +104,7 @@ a {
   top: 0;
   margin-top: 50px;
   margin-left: 50px;
-  background-color: rgb(180, 180, 180);
+  background-color: #d9d9d9;
   color: black;
   border-radius: 50%;
   padding: 16px 20px;
@@ -200,33 +200,38 @@ a {
   border-style: solid;
 }
 
-.select {
-  font-family: 'Arial';
+.select,
+.selectError {
   display: inline-block;
   cursor: pointer;
-  padding: 15px 385px;
-  outline: 0;
-  border: 0px solid #000000;
+  padding: 10px 14px;
+  font-size: large;
+  border: 1px solid white;
   border-radius: 9px;
-  background: #e6e6e6;
-  color: #7b7b7b;
-  appearance: none;
+  background: #ebebeb;
+  color: black;
   width: 850px;
   margin-left: 70px;
   margin-top: 20px;
+}
+option {
+  list-style: none;
+  box-sizing: border-box;
+}
+.selectError {
+  border: 1px solid red;
 }
 
 .select1 {
   display: inline-block;
   cursor: pointer;
-  padding: 15px 26px;
+  padding: 15px 20px;
   outline: 0;
   border: 0px solid #000000;
   border-radius: 9px;
   background: #e6e6e6;
   color: black;
   font-weight: bold;
-  appearance: none;
   min-width: 425px;
   margin-top: 50px;
   margin-left: 5px;
@@ -245,7 +250,8 @@ a {
   margin: 25px;
   font-weight: bolder;
 }
-.file {
+.file,
+.fileError {
   width: 900px;
   height: 400px;
   background-color: #eeeeee;
@@ -261,6 +267,10 @@ a {
   overflow: auto;
   flex-direction: column;
 }
+.fileError {
+  border: dashed 2px #f39c9c;
+  background-color: #fff1f1;
+}
 
 .line {
   width: 90%;
@@ -268,10 +278,14 @@ a {
   margin-top: 30px;
 }
 
-.laptopFile {
+.laptopFile,
+.laptopFileError {
   font-weight: bold;
   color: #84bbf3;
   font-size: 25px;
+}
+.laptopFileError {
+  color: red;
 }
 
 .laptopInfo {
@@ -362,14 +376,13 @@ a {
 .laptopInfoSelect {
   display: inline-block;
   cursor: pointer;
-  padding: 15px 26px;
+  padding: 15px 20px;
   outline: 0;
   border: 0px solid #000000;
   border-radius: 9px;
   background: #e6e6e6;
   color: black;
   font-weight: bold;
-  appearance: none;
   min-width: 280px;
   margin-top: 50px;
   margin-left: 5px;
@@ -388,6 +401,7 @@ input[type='date'] {
   padding: 6px;
   border-radius: 10px;
   width: 400px;
+  cursor: pointer;
 }
 
 input[type='file'] {
