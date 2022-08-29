@@ -13,7 +13,7 @@ const LaptopDetailsPage = () => {
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=93809131a5c595ceaf54d7ab8db53252`
+        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=9416272e2b43dd04ac6786836a8a340e`
       )
 
       setUser(data.data.data.user)
@@ -31,11 +31,25 @@ const LaptopDetailsPage = () => {
           <i class='fa-solid fa-chevron-left'></i>
         </button>
       </Link>
+      <p
+        className='navTitle1'
+        style={{ width: '20%', margin: 'auto', marginTop: '40px' }}
+      >
+        ლეპტოპის ინფო
+      </p>
       <div class='wrapper'>
         <div class='column'>
           <div class='product-wrap'>
             <div>
-              <img style={{ minHeight: '260px' }} src={laptop.image} alt='' />
+              <img
+                style={{
+                  minHeight: '260px',
+                  minWidth: '360px',
+                  maxWidth: '360px',
+                }}
+                src={`https://pcfy.redberryinternship.ge${laptop.image}`}
+                alt=''
+              />
             </div>
           </div>
         </div>
@@ -49,7 +63,9 @@ const LaptopDetailsPage = () => {
             <p>ტელ. ნომერი:</p>
           </div>
           <div className='column1 label4'>
-            <p>{user.name}</p>
+            <p>
+              {user.name} {user.surname}
+            </p>
             <p>{user.team_id}</p>
             <p>{user.position_id}</p>
             <p>{user.email}</p>
@@ -104,8 +120,7 @@ const LaptopDetailsPage = () => {
               <p>ლეპტოპის ფასი:</p>
             </div>
             <div className='column1 label4'>
-              {console.log(laptop)}
-              <p>{laptop.state}</p>
+              {laptop.state == 'used' ? <p>მეორადი</p> : <p>ახალი</p>}
               <p style={{ marginTop: '40px' }}>{laptop.price}</p>
             </div>
           </div>

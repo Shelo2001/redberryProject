@@ -36,7 +36,7 @@ const LaptopInfoPage = () => {
   const [laptopPrice, setLaptopPrice] = useState(0)
   const [laptopCondition, setLaptopCondition] = useState('')
   const inputRef = useRef()
-  const token = '93809131a5c595ceaf54d7ab8db53252'
+  const token = '9416272e2b43dd04ac6786836a8a340e'
   const [modalIsOpen, setIsOpen] = useState(false)
 
   const [fileError, setFileError] = useState(null)
@@ -47,7 +47,6 @@ const LaptopInfoPage = () => {
   const [laptopCpuStreamError, setLaptopCpuStreamError] = useState(0)
   const [laptopRamError, setLaptopRamError] = useState(0)
   const [laptopMemoryTypeError, setLaptopMemoryTypeError] = useState('')
-  const [laptopDateError, setLaptopDateError] = useState('')
   const [laptopPriceError, setLaptopPriceError] = useState(0)
   const [laptopConditionError, setLaptopConditionError] = useState('')
 
@@ -110,45 +109,57 @@ const LaptopInfoPage = () => {
       setFileError('error')
     } else if (!nameRegex.test(`${laptopName}`)) {
       setLaptopNameError('რიცხვი, ლათინური ასოები და სპეციალური სიმბოლოები')
-    } else if (!laptopMemoryType) {
-      setLaptopMemoryTypeError('error')
     } else if (!laptopBrand) {
       setLaptopBrandError('error')
     } else if (!laptopCpu) {
       setLaptopCpuError('error')
+    } else if (isNaN(laptopCpuCore) || laptopCpuCore === 0) {
+      setLaptopCpuCoreError('error')
+    } else if (isNaN(laptopCpuStream) || laptopCpuStream === 0) {
+      setLaptopCpuStreamError('error')
+    } else if (isNaN(laptopRam) || laptopRam === 0) {
+      setLaptopRamError('error')
+    } else if (!laptopMemoryType) {
+      setLaptopMemoryTypeError('error')
+    } else if (isNaN(laptopPrice) || laptopPrice === 0) {
+      setLaptopPriceError('error')
+    } else if (!laptopCondition) {
+      setLaptopConditionError('error')
+    } else {
+      axios({
+        method: 'post',
+        url: 'https://pcfy.redberryinternship.ge/api/laptop/create',
+        data: {
+          name,
+          surname,
+          email,
+          team_id: team,
+          position_id: position,
+          phone_number: phoneNumber,
+          laptop_name: laptopName,
+          laptop_brand_id: laptopBrand,
+          laptop_cpu: laptopCpu,
+          laptop_cpu_cores: laptopCpuCore,
+          laptop_cpu_threads: laptopCpuStream,
+          laptop_ram: laptopRam,
+          laptop_hard_drive_type: laptopMemoryType,
+          laptop_price: laptopPrice,
+          laptop_state: laptopCondition,
+          laptop_image: file,
+          laptop_purchase_date: laptopDate,
+          token,
+        },
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+        .then(function (response) {
+          setIsOpen(true)
+          localStorage.removeItem('laptopInfo')
+          localStorage.removeItem('personInfo')
+        })
+        .catch(function (response) {
+          console.log(response)
+        })
     }
-
-    axios({
-      method: 'post',
-      url: 'https://pcfy.redberryinternship.ge/api/laptop/create',
-      data: {
-        name,
-        surname,
-        email,
-        team_id: team,
-        position_id: position,
-        phone_number: phoneNumber,
-        laptop_name: laptopName,
-        laptop_brand_id: laptopBrand,
-        laptop_cpu: laptopCpu,
-        laptop_cpu_cores: laptopCpuCore,
-        laptop_cpu_threads: laptopCpuStream,
-        laptop_ram: laptopRam,
-        laptop_hard_drive_type: laptopMemoryType,
-        laptop_price: laptopPrice,
-        laptop_state: laptopCondition,
-        laptop_image: file,
-        laptop_purchase_date: laptopDate,
-        token,
-      },
-      headers: { 'Content-Type': 'multipart/form-data' },
-    })
-      .then(function (response) {
-        setIsOpen(true)
-      })
-      .catch(function (response) {
-        console.log(response)
-      })
   }
 
   return (
@@ -220,7 +231,7 @@ const LaptopInfoPage = () => {
             </div>
             <div>
               <select
-                className='select1'
+                className={laptopBrandError ? 'select1Error' : 'select1'}
                 onChange={(e) => setLaptopBrand(e.target.value)}
               >
                 <option disabled selected>
@@ -239,7 +250,9 @@ const LaptopInfoPage = () => {
           <div class='laptopInfo'>
             <div>
               <select
-                className='laptopInfoSelect'
+                className={
+                  laptopCpuError ? 'laptopInfoSelectError' : 'laptopInfoSelect'
+                }
                 onChange={(e) => setLaptopCpu(e.target.value)}
               >
                 <option disabled selected>
@@ -253,45 +266,91 @@ const LaptopInfoPage = () => {
               </select>
             </div>
             <div>
-              <p className='label'>CPU-ს ბირთვი</p>
+              {laptopCpuCoreError ? (
+                <p className='label' style={{ color: 'red' }}>
+                  CPU-ს ბირთვი
+                </p>
+              ) : (
+                <p className='label'>CPU-ს ბირთვი</p>
+              )}
               <input
                 type='text'
-                className='laptopInfoInput'
-                value={Number(laptopCpuCore)}
+                className={
+                  laptopCpuCoreError
+                    ? 'laptopInfoInputError'
+                    : 'laptopInfoInput'
+                }
+                value={laptopCpuCore}
                 placeholder='0'
                 onChange={(e) => setLaptopCpuCore(e.target.value)}
               />
-              <p className='label3'>მხოლოდ ციფრები</p>
+              {laptopCpuCoreError ? (
+                <p className='label3' style={{ color: 'red' }}>
+                  მხოლოდ ციფრები
+                </p>
+              ) : (
+                <p className='label3'>მხოლოდ ციფრები</p>
+              )}{' '}
             </div>
             <div>
-              <p className='label'>CPU-ს ნაკადი</p>
+              {laptopCpuStreamError ? (
+                <p className='label' style={{ color: 'red' }}>
+                  CPU-ს ნაკადი
+                </p>
+              ) : (
+                <p className='label'>CPU-ს ნაკადი</p>
+              )}
               <input
                 type='text'
-                className='laptopInfoInput'
-                value={Number(laptopCpuStream)}
+                className={
+                  laptopCpuStreamError
+                    ? 'laptopInfoInputError'
+                    : 'laptopInfoInput'
+                }
+                value={laptopCpuStream}
                 placeholder='0'
                 onChange={(e) => setLaptopCpuStream(e.target.value)}
               />
-              <p className='label3'>მხოლოდ ციფრები</p>
+              {laptopCpuStreamError ? (
+                <p className='label3' style={{ color: 'red' }}>
+                  მხოლოდ ციფრები
+                </p>
+              ) : (
+                <p className='label3'>მხოლოდ ციფრები</p>
+              )}
             </div>
           </div>
 
           <div class='laptopInfoSecondRow'>
             <div>
-              <p className='label'>ლეპტოპის RAM (GB)</p>
+              {laptopRamError ? (
+                <p className='label' style={{ color: 'red' }}>
+                  ლეპტოპის RAM (GB)
+                </p>
+              ) : (
+                <p className='label'>ლეპტოპის RAM (GB)</p>
+              )}
               <input
                 type='text'
-                value={Number(laptopRam)}
-                className='laptopInfoInput2'
+                value={laptopRam}
+                className={
+                  laptopRamError ? 'laptopInfoInput2Error' : 'laptopInfoInput2'
+                }
                 placeholder='0'
                 onChange={(e) => setLaptopRam(e.target.value)}
               />
-              <p className='label3'>მხოლოდ ციფრები</p>
+              {laptopRamError ? (
+                <p className='label3' style={{ color: 'red' }}>
+                  მხოლოდ ციფრები
+                </p>
+              ) : (
+                <p className='label3'>მხოლოდ ციფრები</p>
+              )}
             </div>
 
             <div onChange={(e) => setLaptopMemoryType(e.target.value)}>
               <p className='label'>
-                მეხსიერების ტიპი{'   '}
+                მეხსიერების ტიპი
                 {laptopMemoryTypeError && (
                   <i
                     class='fa-solid fa-triangle-exclamation'
@@ -299,7 +358,6 @@ const LaptopInfoPage = () => {
                   ></i>
                 )}
               </p>
-
               <input type='radio' name='memoryType' value='SSD'></input>
               <label className='radioLabel'>SSD</label>
 
@@ -326,10 +384,20 @@ const LaptopInfoPage = () => {
               />
             </div>
             <div>
-              <p className='label'>ლეპტოპის ფასი</p>
+              {laptopPriceError ? (
+                <p className='label' style={{ color: 'red' }}>
+                  ლეპტოპის ფასი
+                </p>
+              ) : (
+                <p className='label'>ლეპტოპის ფასი</p>
+              )}
               <input
                 type='text'
-                className='laptopInfoInput2'
+                className={
+                  laptopPriceError
+                    ? 'laptopInfoInput2Error'
+                    : 'laptopInfoInput2'
+                }
                 placeholder='0'
                 value={Number(laptopPrice)}
                 onChange={(e) => setLaptopPrice(e.target.value)}
@@ -338,7 +406,13 @@ const LaptopInfoPage = () => {
                 class='fa-solid fa-lari-sign'
                 style={{ marginLeft: '5px' }}
               ></i>
-              <p className='label3'>მხოლოდ ციფრები</p>
+              {laptopPriceError ? (
+                <p className='label3' style={{ color: 'red' }}>
+                  მხოლოდ ციფრები
+                </p>
+              ) : (
+                <p className='label3'>მხოლოდ ციფრები</p>
+              )}
             </div>
 
             <div
@@ -347,11 +421,13 @@ const LaptopInfoPage = () => {
               onChange={(e) => setLaptopCondition(e.target.value)}
             >
               <p className='label'>ლეპტოპის მდგომარეობა</p>
-              <input
-                type='radio'
-                name='laptopCondition'
-                value='secondhand'
-              ></input>
+              {laptopConditionError && (
+                <i
+                  class='fa-solid fa-triangle-exclamation'
+                  style={{ color: '#c8cb52' }}
+                ></i>
+              )}
+              <input type='radio' name='laptopCondition' value='used'></input>
               <label className='radioLabel'>მეორადი</label>
 
               <input

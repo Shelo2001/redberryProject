@@ -222,12 +222,14 @@ option {
   border: 1px solid red;
 }
 
-.select1 {
+.select1,
+.select1Error {
   display: inline-block;
   cursor: pointer;
   padding: 15px 20px;
   outline: 0;
-  border: 0px solid #000000;
+  border: 1px solid white;
+
   border-radius: 9px;
   background: #e6e6e6;
   color: black;
@@ -235,6 +237,10 @@ option {
   min-width: 425px;
   margin-top: 50px;
   margin-left: 5px;
+}
+
+.select1Error {
+  border: 1px solid red;
 }
 
 .nav {
@@ -306,7 +312,8 @@ option {
   margin: 6px;
 }
 
-.laptopInfoInput {
+.laptopInfoInput,
+.laptopInfoInputError {
   border-width: 2px;
   border-color: #84bbf3;
   border-style: solid;
@@ -317,6 +324,11 @@ option {
   margin-right: 10px;
   margin-bottom: 10px;
 }
+
+.laptopInfoInputError {
+  border-color: red;
+}
+
 .laptopInfoInput:focus {
   outline: none;
   border-width: 2px;
@@ -335,20 +347,26 @@ option {
 }
 .laptopInfoInput1:focus {
   outline: none;
-  border-width: 2px;
   border-color: #84bbf3;
+  border-width: 2px;
   border-style: solid;
 }
 
-.laptopInfoInput2 {
+.laptopInfoInput2,
+.laptopInfoInput2Error {
   border-width: 2px;
-  border-color: #84bbf3;
   border-style: solid;
   padding: 7px;
+  border-color: #84bbf3;
   font-size: 18px;
   border-radius: 7px;
   min-width: 400px;
 }
+
+.laptopInfoInput2Error {
+  border-color: red;
+}
+
 .laptopInfoInput2:focus {
   outline: none;
   border-width: 2px;
@@ -373,12 +391,13 @@ option {
   margin: 6px;
 }
 
-.laptopInfoSelect {
+.laptopInfoSelect,
+.laptopInfoSelectError {
   display: inline-block;
   cursor: pointer;
   padding: 15px 20px;
   outline: 0;
-  border: 0px solid #000000;
+  border: 1px solid white;
   border-radius: 9px;
   background: #e6e6e6;
   color: black;
@@ -386,6 +405,10 @@ option {
   min-width: 280px;
   margin-top: 50px;
   margin-left: 5px;
+}
+
+.laptopInfoSelectError {
+  border: 1px solid red;
 }
 
 .radioLabel {

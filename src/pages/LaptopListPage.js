@@ -10,7 +10,7 @@ const LaptopListPage = () => {
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        'https://pcfy.redberryinternship.ge/api/laptops?token=93809131a5c595ceaf54d7ab8db53252'
+        'https://pcfy.redberryinternship.ge/api/laptops?token=9416272e2b43dd04ac6786836a8a340e'
       )
 
       console.log()
@@ -42,8 +42,12 @@ const LaptopListPage = () => {
               <div className='card'>
                 <div className='cardInfo'>
                   <img
-                    style={{ minHeight: '140px', minWidth: '100%' }}
-                    src={l.laptop.image}
+                    style={{
+                      minHeight: '140px',
+                      minWidth: '100%',
+                      maxHeight: '140px',
+                    }}
+                    src={`https://pcfy.redberryinternship.ge${l.laptop.image}`}
                   ></img>
                 </div>
                 <div className='cardInfo'>
@@ -55,7 +59,7 @@ const LaptopListPage = () => {
                       fontWeight: 'bold',
                     }}
                   >
-                    {l.user.name}
+                    {l.user.name} {l.user.surname}
                   </p>
                   <p
                     style={{

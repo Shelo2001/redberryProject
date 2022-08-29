@@ -44,6 +44,8 @@ const WorkerInfoPage = () => {
       setPhoneNumberError('ნომერი უნდა იწყებოდეს +995 ით')
     } else if (phoneNumber.length < 13) {
       setPhoneNumberError('არ შეესაბამება ქართული ნომრის ფორმატს')
+    } else if (phoneNumber.includes(' ')) {
+      setPhoneNumberError('შეიყვანეთ ნომერი სფეისის გარეშე')
     } else {
       navigate('/laptopinfo')
     }
@@ -65,7 +67,7 @@ const WorkerInfoPage = () => {
     }
     getTeams()
     getPositions()
-  }, [setPositionInfo])
+  }, [])
 
   useEffect(() => {
     const getPerson = JSON.parse(localStorage.getItem('personInfo'))
@@ -142,8 +144,9 @@ const WorkerInfoPage = () => {
               onChange={(e) => setTeam(e.target.value)}
               className={teamError ? 'selectError' : 'select'}
             >
-              {' '}
-              <option disabled>თიმი</option>
+              <option disabled selected>
+                თიმი
+              </option>
               {teamsInfo.map((team) => (
                 <option value={team.id} key={team.id}>
                   {team.name}
@@ -156,7 +159,9 @@ const WorkerInfoPage = () => {
               className={positionError ? 'selectError' : 'select'}
               onChange={(e) => setPosition(e.target.value)}
             >
-              <option disabled>პოზიცია</option>
+              <option disabled selected>
+                პოზიცია
+              </option>
               {positionInfo
                 .filter((position) => position.team_id == team)
                 .map((p) => (
