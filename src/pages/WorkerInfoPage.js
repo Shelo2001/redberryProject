@@ -62,7 +62,7 @@ const WorkerInfoPage = () => {
     if (!matches.width) {
       setText('ლეპტოპის მახასიათებლები')
     }
-  }, [matches.width, text])
+  }, [matches, text])
 
   useEffect(() => {
     const getTeams = async () => {
@@ -106,6 +106,12 @@ const WorkerInfoPage = () => {
           <p className='navTitle'>თანამშრომლის ინფო</p>
           <p className='navTitle'>{text}</p>
         </div>
+        {text && (
+          <div className='navLine'>
+            <hr className='navLinehr'></hr>
+            <hr></hr>
+          </div>
+        )}
         <div className='infobody'>
           <div className='infoPerson'>
             <div>

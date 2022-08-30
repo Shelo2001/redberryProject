@@ -17,7 +17,7 @@ const LaptopDetailsPage = () => {
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=c1b181e54c4737b68b02c3f53fbbdc7e`
+        `https://pcfy.redberryinternship.ge/api/laptop/${params.id}?token=319e794ef81ce4c07912b9390fa46cd9`
       )
 
       setUser(data.data.data.user)
@@ -48,8 +48,8 @@ const LaptopDetailsPage = () => {
   }, [])
 
   return (
-    <div>
-      <Link to='/'>
+    <div className='responsive'>
+      <Link to='/laptoplist'>
         <button className='backButton left'>
           <i class='fa-solid fa-chevron-left'></i>
         </button>
@@ -65,6 +65,7 @@ const LaptopDetailsPage = () => {
           <div class='product-wrap'>
             <div>
               <img
+                className='img-responsive'
                 style={{
                   minHeight: '260px',
                   minWidth: '360px',
@@ -104,65 +105,69 @@ const LaptopDetailsPage = () => {
           </div>
         </div>
       </div>
-      <hr className='line' style={{ width: '50%' }} />
+      <hr className='line' />
 
       <div class='wrapper'>
-        <div class='column'>
-          <div className='information'>
-            <div className='column1 label1'>
-              <p>ლეპტოპის სახელი:</p>
-              <p>ბრენდი:</p>
-              <p>RAM:</p>
-              <p>მეხსიერების ტიპი:</p>
-            </div>
-            <div className='column1 label4'>
-              <p>{laptop.name}</p>
-              <p>{laptop.brand_id}</p>
-              <p>{laptop.ram}</p>
-              <p>{laptop.hard_drive_type}</p>
+        <div class='columnPhone'>
+          <div class='column'>
+            <div className='information'>
+              <div className='column1 label1'>
+                <p>ლეპტ. სახელი:</p>
+                <p>ბრენდი:</p>
+                <p>RAM:</p>
+                <p>მეხსიერების ტიპი:</p>
+              </div>
+              <div className='column1 label4'>
+                <p>{laptop.name}</p>
+                <p>{laptop.brand_id}</p>
+                <p>{laptop.ram}</p>
+                <p>{laptop.hard_drive_type}</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class='column'>
-          <div className='information'>
-            <div className='column1 label1'>
-              <p>CPU:</p>
-              <p>CPU_ს ბირთვი:</p>
-              <p>CPU_ს ნაკადი:</p>
-            </div>
-            <div className='column1 label4'>
-              <p>{laptopCpu.name}</p>
-              <p>{laptopCpu.cores}</p>
-              <p>{laptopCpu.threads}</p>
+          <div class='column'>
+            <div className='information'>
+              <div className='column1 label1'>
+                <p>CPU:</p>
+                <p>CPU_ს ბირთვი:</p>
+                <p>CPU_ს ნაკადი:</p>
+              </div>
+              <div className='column1 label4'>
+                <p>{laptopCpu.name}</p>
+                <p>{laptopCpu.cores}</p>
+                <p>{laptopCpu.threads}</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <hr className='line' style={{ width: '50%' }} />
+      <hr className='line' />
 
       <div class='wrapper'>
-        <div class='column'>
-          <div className='information'>
-            <div className='column1 label1'>
-              <p>ლეპტოპის მდგომარეობა:</p>
-              <p>ლეპტოპის ფასი:</p>
-            </div>
-            <div className='column1 label4'>
-              {laptop.state == 'used' ? <p>მეორადი</p> : <p>ახალი</p>}
-              <p style={{ marginTop: '40px' }}>{laptop.price} ₾</p>
+        <div class='columnPhone'>
+          <div class='column'>
+            <div className='information'>
+              <div className='column1 label1'>
+                <p>ლეპტოპის მდგომარეობა:</p>
+                <p>ლეპტოპის ფასი:</p>
+              </div>
+              <div className='column1 label4'>
+                {laptop.state == 'used' ? <p>მეორადი</p> : <p>ახალი</p>}
+                <p style={{ marginTop: '40px' }}>{laptop.price} ₾</p>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div class='column'>
-          <div className='information'>
-            <div className='column1 label1'>
-              <p>შევსების რიცხვი:</p>
-            </div>
-            <div className='column1 label4'>
-              <p>{laptop.purchase_date}</p>
+          <div class='column'>
+            <div className='information'>
+              <div className='column1 label1'>
+                <p>შევსების რიცხვი:</p>
+              </div>
+              <div className='column1 label4'>
+                <p>{laptop.purchase_date}</p>
+              </div>
             </div>
           </div>
         </div>

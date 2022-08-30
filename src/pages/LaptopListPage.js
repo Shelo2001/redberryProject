@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import footer from '../images/footer.png'
+import { Oval } from 'react-loader-spinner'
 
 const LaptopListPage = () => {
   const [loading, setLoading] = useState(true)
@@ -10,7 +11,7 @@ const LaptopListPage = () => {
   useEffect(() => {
     const getLaptops = async () => {
       const data = await axios.get(
-        'https://pcfy.redberryinternship.ge/api/laptops?token=c1b181e54c4737b68b02c3f53fbbdc7e'
+        'https://pcfy.redberryinternship.ge/api/laptops?token=319e794ef81ce4c07912b9390fa46cd9'
       )
 
       console.log()
@@ -36,7 +37,16 @@ const LaptopListPage = () => {
         </div>
         <div className='cardContainer'>
           {loading ? (
-            <p>loading</p>
+            <Oval
+              height={80}
+              width={80}
+              color='#1a5dab'
+              visible={true}
+              ariaLabel='oval-loading'
+              secondaryColor='#1a5dab'
+              strokeWidth={2}
+              strokeWidthSecondary={2}
+            />
           ) : (
             laptop.map((l) => (
               <div className='card'>

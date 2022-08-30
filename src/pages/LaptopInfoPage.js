@@ -36,7 +36,7 @@ const LaptopInfoPage = () => {
   const [laptopPrice, setLaptopPrice] = useState(0)
   const [laptopCondition, setLaptopCondition] = useState('')
   const inputRef = useRef()
-  const token = 'c1b181e54c4737b68b02c3f53fbbdc7e'
+  const token = '319e794ef81ce4c07912b9390fa46cd9'
   const [modalIsOpen, setIsOpen] = useState(false)
 
   const [fileError, setFileError] = useState(null)
@@ -174,7 +174,12 @@ const LaptopInfoPage = () => {
         </Link>
         <div className='nav' style={{ marginTop: '70px' }}>
           <p className='navTitle'>თანამშრომლის ინფო</p>
+
           <p className='navTitle'>ლეპტოპის მახასიათებლები</p>
+        </div>
+        <div className='navLine1'>
+          <hr></hr>
+          <hr className='navLinehr1'></hr>
         </div>
         <div className='infobody1'>
           <div className='infoPerson'>
@@ -416,7 +421,7 @@ const LaptopInfoPage = () => {
                     : 'laptopInfoInput2'
                 }
                 placeholder='0'
-                value={Number(laptopPrice)}
+                value={laptopPrice}
                 onChange={(e) => setLaptopPrice(e.target.value)}
               />
               <i
@@ -459,7 +464,7 @@ const LaptopInfoPage = () => {
 
           <Link to='/workerinfo'>
             <button
-              className='button1'
+              className='button1 backButton1'
               style={{
                 float: 'left',
                 marginLeft: '40px',
