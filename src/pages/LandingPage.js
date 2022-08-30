@@ -1,9 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../images/logo.png'
 import landingImg from '../images/landingImg.png'
+import group from '../images/Group.png'
 import { Link } from 'react-router-dom'
+import { useMediaQueries } from '@react-hook/media-query'
 
 const LandingPage = () => {
+  const [image, setImage] = useState('')
+  const { matches, matchesAny, matchesAll } = useMediaQueries({
+    screen: 'screen',
+    width: '(max-width: 390px)',
+  })
+
+  useEffect(() => {
+    if (matches.width) {
+      setImage(group)
+    } else {
+      setImage(landingImg)
+    }
+  }, [matches.width, setImage, image])
+
   return (
     <div className='container'>
       <div className='logo'>
@@ -11,7 +27,7 @@ const LandingPage = () => {
       </div>
 
       <div className='landing'>
-        <img src={landingImg} alt='logo' />
+        <img src={image} alt='landinglogo' />
       </div>
 
       <div>

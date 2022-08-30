@@ -1,9 +1,9 @@
 @font-face {
   font-family: ttc;
-  src: url('C:\Users\shelia\Downloads\HelveticaNeue (1).ttc');
+  src: url('../public/HelveticaNeue.ttc');
 }
 
-.body {
+body {
   font-family: ttc;
 }
 
@@ -23,6 +23,7 @@
 
 .landing {
   margin-bottom: 50px;
+  background-image: url('./images/landingImg.png');
 }
 
 Link {
@@ -37,7 +38,7 @@ a {
 .button,
 .button1,
 .button2 {
-  background-color: #79bbff;
+  background-color: #62a1eb;
   border-radius: 6px;
   border: 1px solid #84bbf3;
   display: inline-block;
@@ -62,19 +63,29 @@ a {
 }
 
 .button:hover {
-  background-color: #1a5dab;
-  border: 1px solid #1a5dab;
-  transition: ease 0.3s;
+  background-color: #317ad0;
+  border: 1px solid #317ad0;
+  transition: ease 0.5s;
 }
 .button1:hover {
-  background-color: #1a5dab;
-  border: 1px solid #1a5dab;
-  transition: ease 0.3s;
+  background-color: #317ad0;
+  border: 1px solid #317ad0;
+  transition: ease 0.5s;
 }
 .button2:hover {
+  background-color: #317ad0;
+  border: 1px solid #317ad0;
+  transition: ease 0.5s;
+}
+.button:active {
   background-color: #1a5dab;
-  border: 1px solid #1a5dab;
-  transition: ease 0.3s;
+}
+
+.button1:active {
+  background-color: #1a5dab;
+}
+.button2:active {
+  background-color: #1a5dab;
 }
 
 .infoBody {
@@ -138,7 +149,7 @@ a {
 }
 .backButton:hover {
   background-color: #f2f2f2;
-  transition: ease-in 0.3s;
+  transition: ease-in 0.5s;
   border: #f1f1f1;
 }
 
@@ -174,7 +185,7 @@ a {
 }
 .label4 {
   font-weight: lighter;
-  font-size: larger;
+  font-size: large;
   color: #9f9999;
 }
 
@@ -197,8 +208,9 @@ a {
 .input:focus {
   outline: none;
   border-width: 2px;
-  border-color: #84bbf3;
   border-style: solid;
+  background-color: #f3f4ff;
+  border-color: #6499ff;
 }
 
 .input1 {
@@ -226,7 +238,8 @@ a {
 .input1:focus {
   outline: none;
   border-width: 2px;
-  border-color: #84bbf3;
+  background-color: #f3f4ff;
+  border-color: #6499ff;
   border-style: solid;
 }
 
@@ -279,7 +292,6 @@ option {
   justify-content: flex-start;
   align-items: center;
   align-content: flex-start;
-  overflow: auto;
   flex-direction: row;
 }
 .navTitle {
@@ -363,7 +375,8 @@ option {
 .laptopInfoInput:focus {
   outline: none;
   border-width: 2px;
-  border-color: #84bbf3;
+  background-color: #f3f4ff;
+  border-color: #6499ff;
   border-style: solid;
 }
 .laptopInfoInput1 {
@@ -378,7 +391,8 @@ option {
 }
 .laptopInfoInput1:focus {
   outline: none;
-  border-color: #84bbf3;
+  background-color: #f3f4ff;
+  border-color: #6499ff;
   border-width: 2px;
   border-style: solid;
 }
@@ -401,7 +415,8 @@ option {
 .laptopInfoInput2:focus {
   outline: none;
   border-width: 2px;
-  border-color: #84bbf3;
+  background-color: #f3f4ff;
+  border-color: #6499ff;
   border-style: solid;
 }
 .laptopInfoSecondRow {
@@ -556,4 +571,69 @@ input[type='file'] {
 
 .footer {
   margin-top: 40px;
+}
+
+@media only screen and (max-width: 390px) {
+  .container {
+    max-height: 100vh;
+  }
+  .landing {
+    max-width: 240px;
+
+    margin-top: 130px;
+    margin-bottom: 130px;
+  }
+  .nav {
+    max-height: 50px;
+    background-color: white;
+    flex-direction: column;
+  }
+  .backButton {
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+  .infoBody {
+    max-width: 380px;
+    background-color: white;
+    height: 100vh;
+    align-content: center;
+  }
+  .infobody {
+    max-width: 380px;
+    align-items: center;
+    flex-direction: column;
+  }
+  .infoPerson {
+    flex-direction: column;
+    max-width: 380px;
+    align-items: center;
+    align-content: center;
+  }
+  .input,
+  .inputError {
+    margin-left: 0px;
+    width: 352px;
+  }
+  .select,
+  .selectError {
+    margin-left: 0px;
+    width: 368px;
+  }
+  .input1,
+  .errorInput {
+    width: 352px;
+    margin-left: 0px;
+  }
+  .button1 {
+    margin-right: 12px;
+    margin-bottom: 10px;
+  }
+  .label1,
+  .label2,
+  .errorLabel {
+    margin-left: 0px;
+  }
+  .footer {
+    display: none;
+  }
 }

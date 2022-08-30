@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import footer from '../images/footer.png'
 import axios from 'axios'
+import { useMediaQueries } from '@react-hook/media-query'
 
 const WorkerInfoPage = () => {
   const navigate = useNavigate()
@@ -20,6 +21,7 @@ const WorkerInfoPage = () => {
   const [teamError, setTeamError] = useState('')
   const [positionError, setPositionError] = useState('')
   const [phoneNumberError, setPhoneNumberError] = useState('')
+  const [text, setText] = useState()
 
   const res = /^[ა-ჰ]+$/
 
@@ -50,6 +52,17 @@ const WorkerInfoPage = () => {
       navigate('/laptopinfo')
     }
   }
+
+  const { matches, matchesAny, matchesAll } = useMediaQueries({
+    screen: 'screen',
+    width: '(max-width: 390px)',
+  })
+
+  useEffect(() => {
+    if (!matches.width) {
+      setText('ლეპტოპის მახასიათებლები')
+    }
+  }, [matches.width, text])
 
   useEffect(() => {
     const getTeams = async () => {
@@ -91,7 +104,7 @@ const WorkerInfoPage = () => {
         </Link>
         <div className='nav'>
           <p className='navTitle'>თანამშრომლის ინფო</p>
-          <p className='navTitle'>ლეპტოპის მახასიათებლები</p>
+          <p className='navTitle'>{text}</p>
         </div>
         <div className='infobody'>
           <div className='infoPerson'>
@@ -108,6 +121,7 @@ const WorkerInfoPage = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               />
+
               {nameError ? (
                 <p className='label3' style={{ color: '#e52f2f' }}>
                   {nameError}
